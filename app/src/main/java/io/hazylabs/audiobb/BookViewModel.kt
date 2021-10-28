@@ -4,16 +4,11 @@ import androidx.lifecycle.ViewModel
 
 open class BookViewModel: ViewModel()
 {
-    val title: MutableLiveData<String> by lazy{
-        MutableLiveData<String>()
+    public val book: MutableLiveData<Book> by lazy{
+        MutableLiveData<Book>()
     }
-    public fun title(item:String){
-        title.value=item
-    }
-    val author: MutableLiveData<String> by lazy{
-        MutableLiveData<String>()
-    }
-    public fun author(item:String){
-        author.value=item
+    public fun book(item:Book)
+    {
+        book.value = item
     }
 }

@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class CustomAdapter(_context: Context, _bookList: BookList, _listener: View.OnClickListener) : RecyclerView.Adapter<CustomAdapter.RecyclerViewHolder>()
+class BookAdapter(_context: Context, _bookList: BookList, _listener: View.OnClickListener) : RecyclerView.Adapter<BookAdapter.RecyclerViewHolder>()
 {
     private val context = _context
     private val bookList = _bookList
@@ -26,7 +26,7 @@ class CustomAdapter(_context: Context, _bookList: BookList, _listener: View.OnCl
         holder.rItemView.setOnClickListener(listener)
     }
 
-    override fun getItemCount() = bookList.size()
+    override fun getItemCount() = bookList.size()+1
 
     class RecyclerViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val rItemView = itemView
