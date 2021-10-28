@@ -1,9 +1,11 @@
 package io.hazylabs.audiobb
 
+import java.io.Serializable
 import java.util.ArrayList
 
 
-class BookList {
+class BookList : Serializable
+{
     private val list: MutableList<Book>
     private var size: Int
     fun add(book: Book) {

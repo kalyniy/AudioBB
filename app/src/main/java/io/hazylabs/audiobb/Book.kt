@@ -1,8 +1,10 @@
 package io.hazylabs.audiobb
 
+import java.io.Serializable
 import java.lang.StringBuilder
 
-class Book {
+class Book : Serializable
+{
     var title: String? = null
     var author: String? = null
 
