@@ -17,7 +17,6 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/container2"
-        android:name="io.hazylabs.audiobb.BookDetailsFragment"
         android:layout_width="152dp"
         android:layout_height="164dp"
         app:layout_constraintBottom_toBottomOf="parent"

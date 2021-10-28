@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity(), BookListFragment.DoubleLayout {
         val fragmentContainerView = findViewById<FragmentContainerView>(R.id.container1);
         var bookListFragment = BookListFragment.newInstance(bookList)
         twoPane = findViewById<FragmentContainerView>(R.id.container2) != null
-        if(twoPane)
+        if(!twoPane)
         {
             supportFragmentManager.beginTransaction()
                 .add(R.id.container1, bookListFragment)
@@ -39,9 +39,10 @@ class MainActivity : AppCompatActivity(), BookListFragment.DoubleLayout {
         }
         else
         {
-            BookDetailsFragment
+            var bookDetailsFragment = BookDetailsFragment()
             supportFragmentManager.beginTransaction()
                 .add(R.id.container1, bookListFragment)
+                .add(R.id.container2, bookDetailsFragment)
                 .commit()
         }
 
