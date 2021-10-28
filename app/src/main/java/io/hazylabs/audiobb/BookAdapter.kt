@@ -1,32 +1,34 @@
 package io.hazylabs.audiobb
-
-
-
+import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
+class CustomAdapter(_context: Context, _bookList: BookList, _listener: View.OnClickListener) : RecyclerView.Adapter<CustomAdapter.RecyclerViewHolder>()
+{
+    private val context = _context
+    private val bookList = _bookList
+    private val listener = _listener
 
-class BookAdapter (_items : BookList, _ocl : View.OnClickListener) : RecyclerView.Adapter<BookAdapter.ViewHolder>(){
-
-    private val items = _items
-    val ocl = _ocl
-    class ViewHolder(_view: ImageView, ocl: View.OnClickListener) : RecyclerView.ViewHolder(_view) {
-        val imageView = _view.apply { setOnClickListener(ocl) }
-
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
+        val itemView = LayoutInflater.from(context).inflate(R.layout.book_layout, null)
+        return RecyclerViewHolder(itemView)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(ImageView(parent.context).apply { layoutParams = ViewGroup.LayoutParams(300, 300) }, ocl)
+    override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
+        val title = holder.rItemView.findViewById<TextView>(R.id.textViewTitle)
+        val author = holder.rItemView.findViewById<TextView>(R.id.textViewAuthor)
+        title.text = bookList.get(position).title
+        author.text = bookList.get(position).author
+
+        holder.rItemView.setOnClickListener(listener)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun getItemCount() = bookList.size()
 
+    class RecyclerViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        val rItemView = itemView
     }
-
-    override fun getItemCount(): Int {
-        return items.size()
-    }
-
 }

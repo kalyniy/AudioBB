@@ -13,18 +13,18 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 
-private const val ARG_PARAM1 = "items"
+private const val ARG_PARAM1 = "books"
 class BookListFragment : Fragment() {
     // TODO: Rename and change types of parameters
-    private var param1: BookList? = null
     private lateinit var viewModel: BookViewModel
+    private lateinit var bookList: BookList
     private lateinit var recycle: RecyclerView
     private lateinit var layout: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getSerializable(ARG_PARAM1) as BookList?
+            bookList = it.getSerializable(ARG_PARAM1) as BookList
         }
     }
 
@@ -42,20 +42,22 @@ class BookListFragment : Fragment() {
 
         viewModel = ViewModelProvider(requireActivity()).get(BookViewModel::class.java)
 
-        recycle = layout.findViewById<RecyclerView>(R.id.recyclerView)
-        recycle.layoutManager = GridLayoutManager(layout.context, 3)
-
-        val onClickListener = View.OnClickListener {
-            val index = recycle.getChildAdapterPosition(it)
-            val selectedBook = param1!![index];
-            val title = (selectedBook.title)!!
-            val author = (selectedBook.author)!!
-            viewModel.title(title)
-            viewModel.author(author)
+        recycle = view.findViewById(R.id.recyclerView)
+        recycle.layoutManager = GridLayoutManager(requireContext(), 2)
+        val adapter = CustomAdapter(requireContext(), bookList) {
+            updateViewModel(recycle.getChildAdapterPosition(it))
         }
-        recycle.adapter = BookAdapter(param1!!, onClickListener)
+        recycle.adapter = adapter
+    }
+    private fun updateViewModel(index: Int) {
+        ViewModelProvider(requireActivity())
+            .get(BookViewModel::class.java)
+            var book: Book = bookList.get(index)
+        (requireActivity() as DoubleLayout).selectionMade()
+    }
 
-
+    interface DoubleLayout {
+        fun selectionMade()
     }
     companion object
     {
@@ -63,7 +65,7 @@ class BookListFragment : Fragment() {
         fun newInstance(param1: BookList) =
             BookListFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(ARG_PARAM1, param1)
+                    putSerializable(ARG_PARAM1, bookList)
                 }
             }
     }
