@@ -28,18 +28,21 @@ class MainActivity : AppCompatActivity(), BookListFragment.DoubleLayout {
 
         bookViewModel = ViewModelProvider(this).get(BookViewModel::class.java)
         var bookList: BookList = populateBookList(10) // generate 10 random books
+        val fragmentContainerView = findViewById<FragmentContainerView>(R.id.container1);
+        var bookListFragment = BookListFragment.newInstance(bookList)
         twoPane = findViewById<FragmentContainerView>(R.id.container2) != null
         if(twoPane)
         {
-            val fragmentContainerView = findViewById<FragmentContainerView>(R.id.container1);
-            var bookListFragment = BookListFragment.newInstance(bookList)
             supportFragmentManager.beginTransaction()
                 .add(R.id.container1, bookListFragment)
                 .commit()
         }
         else
         {
-
+            BookDetailsFragment
+            supportFragmentManager.beginTransaction()
+                .add(R.id.container1, bookListFragment)
+                .commit()
         }
 
     }
